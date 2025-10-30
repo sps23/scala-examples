@@ -29,11 +29,11 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Setup JDK 11
+    - name: Setup JDK 21
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: '11'
+        java-version: '21'
         cache: 'sbt'
 
     - name: Setup sbt
@@ -65,4 +65,3 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "🔗 View at: https://sylwesterstocki.github.io/scala-examples/" >> $GITHUB_STEP_SUMMARY
         echo "📝 Commit: ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
-
