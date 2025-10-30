@@ -1,10 +1,13 @@
+import sbtunidoc.ScalaUnidocPlugin.autoImport._
+import com.github.sbt.sbtghpages.GhpagesPlugin
+import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport._
+import com.typesafe.sbt.site.SitePlugin.autoImport._
+import com.typesafe.sbt.site.SiteScaladocPlugin
+import com.typesafe.sbt.site.SiteScaladocPlugin.autoImport._
+
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
 ThisBuild / scalaVersion := "2.13.17"
-
-// GitHub Pages settings
-ThisBuild / githubOwner := "sylwesterstocki"
-ThisBuild / githubRepository := "scala-examples"
 
 lazy val root = (project in file("."))
   .settings(
@@ -23,7 +26,9 @@ lazy val root = (project in file("."))
     addMappingsToSiteDir(ScalaUnidoc / packageDoc / mappings, SiteScaladoc / siteSubdirName),
     // GitHub Pages publish settings
     ghpagesNoJekyll := true,
-    ghpagesBranch := "gh-pages"
+    ghpagesBranch := "gh-pages",
+    // GitHub Pages configuration
+    git.remoteRepo := "git@github.com:sylwesterstocki/scala-examples.git"
   )
   .aggregate(zioExamples)
   .enablePlugins(ScalaUnidocPlugin, SiteScaladocPlugin, GhpagesPlugin)
@@ -45,7 +50,3 @@ lazy val zioExamples = (project in file("zio-examples"))
       "-implicits"
     )
   )
-
-
-// GitHub Pages configuration
-git.remoteRepo := s"git@github.com:${githubOwner.value}/${githubRepository.value}.git"

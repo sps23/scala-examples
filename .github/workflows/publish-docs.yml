@@ -1,0 +1,96 @@
+name: Publish Documentation to GitHub Pages
+
+on:
+  # Run manually from the Actions tab
+  workflow_dispatch:
+  # Optionally run on push to main branch
+  # push:
+  #   branches:
+  #     - main
+  #   paths:
+  #     - '**.scala'
+  #     - 'build.sbt'
+  #     - 'src/site/**'
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Full history for git commands
+
+    - name: Setup JDK 11
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '11'
+        cache: 'sbt'
+
+    - name: Setup sbt
+      run: |
+        echo "deb https://repo.scala-sbt.org/scalasbt/debian all main" | sudo tee /etc/apt/sources.list.d/sbt.list
+        echo "deb https://repo.scala-sbt.org/scalasbt/debian /" | sudo tee /etc/apt/sources.list.d/sbt_old.list
+        curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | sudo apt-key add
+        sudo apt-get update
+        sudo apt-get install sbt
+
+    - name: Configure Git
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+    - name: Compile project
+      run: sbt compile
+
+    - name: Generate unified documentation
+      run: sbt unidoc
+
+    - name: Generate complete site
+      run: sbt makeSite
+
+    - name: Check generated site
+      run: |
+        echo "Site contents:"
+        ls -la target/site/
+        if [ -d "target/site/api" ]; then
+          echo "API documentation generated successfully"
+          ls -la target/site/api/
+        else
+          echo "Warning: API documentation not found"
+        fi
+
+    - name: Setup SSH key for gh-pages
+      env:
+        SSH_PRIVATE_KEY: ${{ secrets.GH_PAGES_DEPLOY_KEY }}
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+
+    - name: Publish to GitHub Pages
+      run: sbt ghpagesPushSite
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Summary
+      run: |
+        echo "✅ Documentation published successfully!" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "🔗 View your documentation at:" >> $GITHUB_STEP_SUMMARY
+        echo "https://sylwesterstocki.github.io/scala-examples/" >> $GITHUB_STEP_SUMMARY
+
