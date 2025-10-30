@@ -1,21 +1,53 @@
+# Scala & SBT
 target/
-!.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+*.class
+*.log
+*.cache
+*.jar
+*.war
+*.ear
+.cache-main
+.cache-tests
+.scala_dependencies
+.worksheet
+dist/*
 
-### IntelliJ IDEA ###
+# sbt specific
+.bsp/
+.sbt-hydra-history
+project/boot/
+project/plugins/project/
+lib_managed/
+src_managed/
+project/target/
+project/project/
+project/metals.sbt
+
+# IntelliJ IDEA
+.idea/
+.idea_modules/
 .idea/modules.xml
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+.idea/modules/
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/dictionaries
+.idea/shelf
+.idea/caches
+.idea/codeStyles
+.idea/inspectionProfiles
+.idea/httpRequests
+.idea/sonarlint
+.idea/vcs.xml
 *.iws
 *.iml
 *.ipr
 out/
-!**/src/main/**/out/
-!**/src/test/**/out/
 
-### Eclipse ###
+# Eclipse
 .apt_generated
 .classpath
 .factorypath
@@ -24,24 +56,67 @@ out/
 .springBeans
 .sts4-cache
 bin/
-!**/src/main/**/bin/
-!**/src/test/**/bin/
+.buildpath
 
-### NetBeans ###
+# NetBeans
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
 build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# VS Code & Metals (Scala Language Server)
 .vscode/
+.metals/
+.bloop/
+metals.sbt
 
-### Mac OS ###
+# Ensime
+.ensime
+.ensime_cache/
+.ensime_lucene/
+
+# Mac OS
 .DS_Store
+.AppleDouble
+.LSOverride
+._*
 
-### Scala ###
-.bsp/
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# GitHub Pages
+.gh-pages/
+
+# Maven (if ever used)
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# Temporary files
+*.tmp
+*.swp
+*~
+.nfs*
+
+# Test output
+test-output/
+test-results/
