@@ -27,7 +27,7 @@ object NumberStream extends ZIOAppDefault {
         .runDrain
         .onInterrupt(ZIO.logInfo("Number stream stopped!"))
         .onExit {
-          case Exit.Success(_) => ZIO.logInfo("Number stream completed successfully")
+          case Exit.Success(_)     => ZIO.logInfo("Number stream completed successfully")
           case Exit.Failure(cause) => ZIO.logInfo(s"Number stream failed: ${cause.prettyPrint}")
         }
 

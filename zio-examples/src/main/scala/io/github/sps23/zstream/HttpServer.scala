@@ -13,7 +13,7 @@ object HttpServer extends ZIOAppDefault {
   private val loggingMiddleware =
     Middleware.requestLogging(
       logRequestBody = true,
-      logResponseBody = true
+      logResponseBody = true,
     ) ++ Middleware.debug
 
   // Apply middleware to routes
@@ -26,7 +26,7 @@ object HttpServer extends ZIOAppDefault {
         .provide(Server.defaultWithPort(8080))
         .onInterrupt(ZIO.logInfo("HTTP server stopped!"))
         .onExit {
-          case Exit.Success(_) => ZIO.logInfo("HTTP server completed successfully")
+          case Exit.Success(_)     => ZIO.logInfo("HTTP server completed successfully")
           case Exit.Failure(cause) => ZIO.logInfo(s"HTTP server failed: ${cause.prettyPrint}")
         }
 
