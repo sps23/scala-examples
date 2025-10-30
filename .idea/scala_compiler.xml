@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ScalaCompilerConfiguration">
+    <option name="separateProdTestSources" value="true" />
+    <profile name="sbt 1" modules="scala-examples,scala-examples.main,scala-examples.test,scala-examples.zio-examples,scala-examples.zio-examples.main,scala-examples.zio-examples.test,zio-examples,zio-examples.main,zio-examples.test" />
+  </component>
+</project>
