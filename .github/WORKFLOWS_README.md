@@ -70,7 +70,7 @@ on:
 ## What the Workflow Does
 
 1. **Checkout** - Clones your repository
-2. **Setup Java & sbt** - Installs JDK 11 and sbt build tool
+2. **Setup Java & sbt** - Installs JDK 21 and sbt build tool
 3. **Compile** - Runs `sbt compile` to ensure code compiles
 4. **Generate Docs** - Runs `sbt unidoc` to create unified API documentation
 5. **Build Site** - Runs `sbt makeSite` to generate the complete website
@@ -179,5 +179,4 @@ To make documentation updates part of your CI/CD pipeline:
 ✅ **No manual steps** - One-click publishing  
 ✅ **Version controlled** - All docs in git history  
 ✅ **Professional** - Polished landing page + API docs  
-✅ **Scalable** - Easily add more modules  
-
+✅ **Scalable** - Easily add more modules
