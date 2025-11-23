@@ -1,9 +1,9 @@
-import sbtunidoc.ScalaUnidocPlugin.autoImport.*
 import com.github.sbt.sbtghpages.GhpagesPlugin
 import com.github.sbt.sbtghpages.GhpagesPlugin.autoImport.*
 import com.typesafe.sbt.site.SitePlugin.autoImport.*
 import com.typesafe.sbt.site.SiteScaladocPlugin
 import com.typesafe.sbt.site.SiteScaladocPlugin.autoImport.*
+import sbtunidoc.ScalaUnidocPlugin.autoImport.*
 
 ThisBuild / version := "0.1.0-SNAPSHOT"
 
@@ -40,7 +40,7 @@ lazy val root = (project in file("."))
     // GitHub Pages configuration
     git.remoteRepo := "git@github.com:sylwesterstocki/scala-examples.git",
   )
-  .aggregate(zioExamples)
+  .aggregate(zioExamples, pureScalaExamples)
   .enablePlugins(ScalaUnidocPlugin, SiteScaladocPlugin, GhpagesPlugin)
 
 lazy val zioExamples = (project in file("zio-examples"))
@@ -50,13 +50,12 @@ lazy val zioExamples = (project in file("zio-examples"))
     Compile / compile := (Compile / compile).dependsOn(Compile / scalafmtCheck).value,
     Test / compile    := (Test / compile).dependsOn(Test / scalafmtCheck).value,
     libraryDependencies ++= Seq(
-      "dev.zio"                %% "zio"                        % "2.1.22",
-      "dev.zio"                %% "zio-streams"                % "2.1.22",
-      "dev.zio"                %% "zio-http"                   % "3.5.1",
-      "dev.zio"                %% "zio-logging"                % "2.5.1",
-      "dev.zio"                %% "zio-logging-slf4j2"         % "2.5.1",
-      "ch.qos.logback"          % "logback-classic"            % "1.5.20",
-      "org.scala-lang.modules" %% "scala-parallel-collections" % "1.0.4",
+      "dev.zio"       %% "zio"                % "2.1.22",
+      "dev.zio"       %% "zio-streams"        % "2.1.22",
+      "dev.zio"       %% "zio-http"           % "3.5.1",
+      "dev.zio"       %% "zio-logging"        % "2.5.1",
+      "dev.zio"       %% "zio-logging-slf4j2" % "2.5.1",
+      "ch.qos.logback" % "logback-classic"    % "1.5.21",
     ),
     Compile / doc / scalacOptions ++= Seq(
       "-doc-title",
@@ -64,4 +63,17 @@ lazy val zioExamples = (project in file("zio-examples"))
       "-groups",
       "-implicits",
     ),
+  )
+
+lazy val pureScalaExamples = (project in file("pure-scala-examples"))
+  .settings(
+    name              := "pure-scala-examples",
+    Compile / compile := (Compile / compile).dependsOn(Compile / scalafmtCheck).value,
+    Test / compile    := (Test / compile).dependsOn(Test / scalafmtCheck).value,
+    libraryDependencies ++= Seq(
+      "org.scala-lang.modules" %% "scala-parallel-collections" % "1.2.0",
+      "org.scalatest"          %% "scalatest"                  % "3.2.19" % Test,
+    ),
+    testFrameworks += new TestFramework("org.scalatest.tools.Framework"),
+    Test / parallelExecution := false,
   )

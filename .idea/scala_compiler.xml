@@ -2,6 +2,6 @@
 <project version="4">
   <component name="ScalaCompilerConfiguration">
     <option name="separateProdTestSources" value="true" />
-    <profile name="sbt 1" modules="pure-scala-examples,pure-scala-examples.main,pure-scala-examples.test,scala-examples,scala-examples.main,scala-examples.test,scala-examples.zio-examples,scala-examples.zio-examples.main,scala-examples.zio-examples.test,zio-examples,zio-examples.main,zio-examples.scala-examples,zio-examples.scala-examples.main,zio-examples.scala-examples.test,zio-examples.scala-examples.zio-examples,zio-examples.scala-examples.zio-examples.main,zio-examples.scala-examples.zio-examples.test,zio-examples.test" />
+    <profile name="sbt 1" modules="scala-examples,scala-examples.main,scala-examples.pure-scala-examples,scala-examples.pure-scala-examples.main,scala-examples.pure-scala-examples.test,scala-examples.test,scala-examples.zio-examples,scala-examples.zio-examples.main,scala-examples.zio-examples.test,scala-examples_907,scala-examples_907.main,scala-examples_907.test" />
   </component>
 </project>

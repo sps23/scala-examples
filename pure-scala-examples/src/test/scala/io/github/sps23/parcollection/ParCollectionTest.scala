@@ -1,10 +1,8 @@
 package io.github.sps23.parcollection
 
-import java.util.concurrent.Executors
-import scala.collection.parallel.CollectionConverters._
-import scala.collection.parallel.ExecutionContextTaskSupport
+import org.scalatest.funsuite.AnyFunSuiteLike
 
-object ParCollection extends App {
+class ParCollectionTest extends AnyFunSuiteLike {
 
   // List of all European countries
   val europeanCountries: List[String] = List(
@@ -70,29 +68,27 @@ object ParCollection extends App {
     upper
   }
 
-  def applyF[In,Out](list: List[In], f: In => Out): Seq[Out] =
-    list.map(f)
+  private val limitedParallelThreads = 5
+  private val parallelism            = 4
 
-  def applyParF[In,Out](list: List[In], f: In => Out): Seq[Out] =
-    list.par.map(f).seq
-
-  def applyParF[In,Out](list: List[In], f: In => Out, maxThreads: Int): Seq[Out] = {
-    val fixedThreadPool = Executors.newFixedThreadPool(maxThreads)
-    val ec              = scala.concurrent.ExecutionContext.fromExecutor(fixedThreadPool)
-    val parCollection   = list.par
-    parCollection.tasksupport = new ExecutionContextTaskSupport(ec)
-    parCollection.map(f).seq
+  test("applyParF processes all countries in parallel (default threads)") {
+    val result = ParCollection.applyParF(europeanCountries, toUpper)
+    assert(result.size === europeanCountries.size)
   }
 
-  // Sequential processing
-  println("Sequential Result:")
-  val sequentialResult = applyF(europeanCountries, toUpper)
+  test("applyParF with fixed parallelism processes all countries") {
 
-  // Parallel processing (Scala 2.13 parallel collections)
-  println("\nParallel Result:")
-  val parallelResult = applyF(europeanCountries, toUpper)
+    val result = ParCollection.applyParForkF(europeanCountries, toUpper, parallelism)
+    assert(result.size === europeanCountries.size)
+  }
 
-  println("\nParallel Result with Limited Threads:")
-  val parallelResultWithLimitedThreads = applyParF(europeanCountries, toUpper, 5)
-  //
+  test("applyParFixedF processes all countries with limited threads") {
+    val result = ParCollection.applyParFixedF(europeanCountries, toUpper, limitedParallelThreads)
+    assert(result.size === europeanCountries.size)
+  }
+
+  test("applyF processes all countries sequentially") {
+    val result = ParCollection.applyF(europeanCountries, toUpper)
+    assert(result.size === europeanCountries.size)
+  }
 }
