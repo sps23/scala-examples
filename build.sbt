@@ -73,7 +73,10 @@ lazy val pureScalaExamples = (project in file("pure-scala-examples"))
     libraryDependencies ++= Seq(
       "org.scala-lang.modules" %% "scala-parallel-collections" % "1.2.0",
       "org.scalatest"          %% "scalatest"                  % "3.2.19" % Test,
+      "com.storm-enroute"      %% "scalameter"                 % "0.21"   % Test,
     ),
     testFrameworks += new TestFramework("org.scalatest.tools.Framework"),
+    testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework"),
     Test / parallelExecution := false,
+    Test / logBuffered       := false,
   )
