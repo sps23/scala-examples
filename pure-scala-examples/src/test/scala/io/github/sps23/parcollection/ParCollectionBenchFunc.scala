@@ -72,4 +72,3 @@ object ParCollectionBenchFunc {
   def sumOfSquaresParFixed(values: Seq[Int], fixedNumberOfThreads: Int = defaultParallelism): Long =
     ParCollection.applyParFixedF(values, square, fixedNumberOfThreads).sum
 }
-
