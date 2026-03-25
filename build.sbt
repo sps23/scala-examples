@@ -9,6 +9,10 @@ ThisBuild / version := "0.1.0-SNAPSHOT"
 
 ThisBuild / scalaVersion := "2.13.17"
 
+val zioVersion        = "2.1.20"
+val zioHttpVersion    = "3.4.1"
+val zioLoggingVersion = "2.5.1"
+
 // Scalafmt settings for all projects
 ThisBuild / scalafmtOnCompile := true
 ThisBuild / scalafmtCheck     := true
@@ -50,12 +54,14 @@ lazy val zioExamples = (project in file("zio-examples"))
     Compile / compile := (Compile / compile).dependsOn(Compile / scalafmtCheck).value,
     Test / compile    := (Test / compile).dependsOn(Test / scalafmtCheck).value,
     libraryDependencies ++= Seq(
-      "dev.zio"       %% "zio"                % "2.1.22",
-      "dev.zio"       %% "zio-streams"        % "2.1.22",
-      "dev.zio"       %% "zio-http"           % "3.5.1",
-      "dev.zio"       %% "zio-logging"        % "2.5.1",
-      "dev.zio"       %% "zio-logging-slf4j2" % "2.5.1",
+      "dev.zio"       %% "zio"                % zioVersion,
+      "dev.zio"       %% "zio-streams"        % zioVersion,
+      "dev.zio"       %% "zio-http"           % zioHttpVersion,
+      "dev.zio"       %% "zio-logging"        % zioLoggingVersion,
+      "dev.zio"       %% "zio-logging-slf4j2" % zioLoggingVersion,
       "ch.qos.logback" % "logback-classic"    % "1.5.21",
+      "dev.zio"       %% "zio-test"           % zioVersion % Test,
+      "dev.zio"       %% "zio-http-testkit"   % zioHttpVersion % Test,
     ),
     Compile / doc / scalacOptions ++= Seq(
       "-doc-title",
