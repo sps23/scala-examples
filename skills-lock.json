@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "skills": {
+    "zio-http-knowledge": {
+      "source": "zio/zio-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/zio-skills/skills/zio-http-knowledge/SKILL.md",
+      "computedHash": "7754c2983fc321a2530da9d62c2102a88ed2d9620cd5981733f2848da1e63467"
+    },
+    "zio-knowledge": {
+      "source": "zio/zio-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/zio-skills/skills/zio-knowledge/SKILL.md",
+      "computedHash": "b88894195fa02873558c0c711c626dc428135e3d50a9a6562503f6fb55dc4e28"
+    }
+  }
+}

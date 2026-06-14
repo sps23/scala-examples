@@ -153,6 +153,55 @@ sbt scalafmt
 sbt Test/scalafmt
 ```
 
+## Copilot Skill Playbook (ZIO)
+
+Use this prompt template when asking Copilot for ZIO or ZIO HTTP changes so responses are grounded in the installed skills and current docs.
+
+```text
+Use the `zio-knowledge` and `zio-http-knowledge` skills before writing code.
+
+Project constraints:
+- Scala 2.13.17
+- sbt 1.11.7
+- Keep changes scoped to the requested module (for ZIO work: `zio-examples`)
+
+Task:
+<describe what to build/change>
+
+Requirements:
+1) Consult the skill workflow and fetch the relevant ZIO/ZIO HTTP docs pages first.
+2) Generate code that matches this repository's structure and coding style.
+3) Cite the documentation URLs used for API/type decisions.
+4) Explain any version-sensitive API choices.
+5) Add/update tests when behavior changes.
+6) Run compile/tests for touched modules and report results.
+```
+
+Use this follow-up prompt as a quality gate after code generation:
+
+```text
+Perform a strict self-review of your solution:
+- identify behavioral risks/regressions
+- verify ZIO/ZIO HTTP imports and type signatures
+- verify ZIO idioms (error channel, interruption, scope/resource safety, logging)
+- propose minimal fixes and apply them
+- re-run compile/tests for touched modules
+```
+
+Practical tips:
+- Ask for `Scaladoc` on new public APIs.
+- Ask for graceful shutdown and interruption handling when adding long-running effects.
+- Ask for explicit test updates (route tests, stream tests, integration tests) instead of code-only changes.
+
+### Reusable prompt files
+
+Prompt templates are stored in `.github/prompts/` so you can reuse them without rewriting instructions each time.
+
+- Start with `.github/prompts/zio-default.md`.
+- Use specialized templates for endpoint, stream, ZLayer, and test work.
+- See `.github/prompts/README.md` for usage details.
+- Use `PROMPTS.md` for quick copy-ready shortcuts.
+
 ## Contributing
 
 This project follows functional programming best practices:
@@ -168,4 +217,3 @@ See LICENSE file for details.
 ## Author
 
 Sylwester Stocki - [GitHub Profile](https://github.com/sylwesterstocki)
-
